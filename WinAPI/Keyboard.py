@@ -1,3 +1,4 @@
+
 class Mouse:
     VK_LBUTTON = 0x1                        # Linker Mousebutton
     VK_RBUTTON = 0x2                        # Right Mousebutton
