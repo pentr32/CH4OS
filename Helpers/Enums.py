@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 # ClassIDs needs to be updated with the values from sv_dump_class_info
 class ClassIDs(Enum):
     CAK47 = 1
@@ -305,11 +306,13 @@ class GameState(Enum):
     MENU = 0
     GAME = 6
 
+
 class Team(Enum):
     NONE = 0
     Spectator = 1
     Terrorist = 2
     Counter_Terrorist = 3
+
 
 class LifeState(Enum):
     Alive = 0

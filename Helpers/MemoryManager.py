@@ -1,4 +1,4 @@
-import pymem            # pip install pymem
+import pymem    # pip install pymem
 import pymem.process
 import re
 import struct
@@ -73,10 +73,3 @@ def scan_pattern(dll, pattern, extra, offset, mode_subtract):
 
     return temp_offset
 
-
-def read_matrix(process_handle, address, matrix_size):
-    byte_size = struct.calcsize('f')
-    buffer = bytearray(byte_size * matrix_size)
-    pm.Pymem(process_handle)
-    pm.read_bytes(address, buffer)
-    return struct.unpack('f' * matrix_size, buffer)
