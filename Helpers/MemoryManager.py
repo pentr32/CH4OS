@@ -1,9 +1,10 @@
-import pymem    # pip install pymem
+import pymem
 import pymem.process
 import re
 import struct
+from Modules import *
 
-pm = pymem.Pymem("csgo.exe")
+pm = pymem.Pymem(ProcessName)
 
 
 def aob_scan(dll, range, signature, instance):

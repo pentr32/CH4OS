@@ -1,3 +1,4 @@
+import MemoryManager
 
 # Some offsets need to be updated from: https://github.com/frk1/hazedumper/blob/master/csgo.cs
 

@@ -2,10 +2,6 @@ from math import *
 from Helpers.Vector3 import Vector3
 from Helpers.Offsets import *
 
-# Cleaned most of this file,
-# This file is working.
-# Last update 2022,Jan,10
-
 
 def checkangles(x, y):
     if x > 89:
