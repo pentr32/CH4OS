@@ -1,7 +1,7 @@
 from enum import Enum
 
-# Needs to be updated with the values from sv_dump_class_info
-class ClassIds(Enum):
+# ClassIDs needs to be updated with the values from sv_dump_class_info
+class ClassIDs(Enum):
     CAK47 = 1
     CBaseAnimating = 2
     CBaseAnimatingOverlay = 3
@@ -288,17 +288,17 @@ class ClassIds(Enum):
 
 class MoveType_t(Enum):
     MOVETYPE_NONE = 0
-    MOVETYPE_ISOMETRIC = 0
-    MOVETYPE_WALK = 0
-    MOVETYPE_STEP = 0
-    MOVETYPE_FLY = 0
-    MOVETYPE_FLYGRAVITY = 0
-    MOVETYPE_VPHYSICS = 0
-    MOVETYPE_PUSH = 0
-    MOVETYPE_NOCLIP = 0
-    MOVETYPE_LADDER = 0
-    MOVETYPE_OBSERVER = 0
-    MOVETYPE_CUSTOM = 0
+    MOVETYPE_ISOMETRIC = 1
+    MOVETYPE_WALK = 2
+    MOVETYPE_STEP = 3
+    MOVETYPE_FLY = 4
+    MOVETYPE_FLYGRAVITY = 5
+    MOVETYPE_VPHYSICS = 6
+    MOVETYPE_PUSH = 7
+    MOVETYPE_NOCLIP = 8
+    MOVETYPE_LADDER = 9
+    MOVETYPE_OBSERVER = 10
+    MOVETYPE_CUSTOM = 11
 
 
 class GameState(Enum):
@@ -307,12 +307,12 @@ class GameState(Enum):
 
 class Team(Enum):
     NONE = 0
-    Spectator = 0
-    Terrorist = 0
-    Counter_Terrorist = 0
+    Spectator = 1
+    Terrorist = 2
+    Counter_Terrorist = 3
 
 class LifeState(Enum):
     Alive = 0
-    Dead = 0
-    Spectatin = 0
+    Dead = 1
+    Spectating = 2
 

@@ -1,4 +1,5 @@
 
+# Some offsets needs to be updated from: https://github.com/frk1/hazedumper/blob/master/csgo.cs
 class Offsets:
     m_ArmorValue = 0x117CC
     m_Collision = 0x320
