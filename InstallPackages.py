@@ -1,4 +1,3 @@
-import sys
 import subprocess
 import os
 
@@ -7,7 +6,7 @@ clearoutput = lambda: os.system('cls')
 
 
 def install_package(package: str):
-    subprocess.check_call([sys.executable, '-m', '-pip', 'install', package])
+    subprocess.check_call(['pip', 'install', package])
 
 
 def is_installed(package: str):
@@ -19,7 +18,7 @@ def is_installed(package: str):
         return False
 
     except Exception as ex:
-        print(f'[!] Error: {ex}. Package: {package}')
+        print(f'\n[!] Error: {ex}. Package: {package}')
 
 
 def get_packages_list():
@@ -36,16 +35,16 @@ def run():
     packageslist = get_packages_list()
 
     if not packageslist:
-        return print('[!] All packages are already installed!')
+        return print('\n[!] All packages are already installed!')
 
-    print(f'[!] {len(packageslist)} packages are missing! Without those, you cannot run the scripts from this project. \n')
+    print(f'\n[!] {len(packageslist)} packages are missing! Without those, you cannot run the scripts from this project. \n')
     print('Would you like to install it? Y/N')
 
     if input().lower() == 'y':
         for package in packageslist:
-            print(f'[+] Installing {package}...')
+            print(f'\n[+] Installing {package}...')
             install_package(package)
-        print(f'[!] {len(packageslist)} has been installed!')
+        print(f'\n[!] {len(packageslist)} has been installed!')
 
 
 try:
@@ -53,5 +52,5 @@ try:
     run()
 
 except KeyboardInterrupt:
-    print('[!] The operation was cancelled by the user!')
+    print('\n[!] The operation was cancelled by the user!')
 

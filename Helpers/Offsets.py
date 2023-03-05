@@ -1,6 +1,43 @@
-import MemoryManager
+import pymem
+import re
+import requests
+from Modules import *
 
-# Some offsets need to be updated from: https://github.com/frk1/hazedumper/blob/master/csgo.cs
+
+def get_signature(pm, modulename, pattern, extra=0, offset=0, relative=True):
+    if offset == 0:
+        module = pymem.process.module_from_name(pm.process_handle, modulename)
+        bytes = pm.read_bytes(module.lpBaseOfDll, module.SizeOfImage)
+        match = re.search(pattern, bytes).start()
+        res = match + extra
+        return res
+    module = pymem.process.module_from_name(pm.process_handle, modulename)
+    bytes = pm.read_bytes(module.lpBaseOfDll, module.SizeOfImage)
+    match = re.search(pattern, bytes).start()
+    non_relative = pm.read_int(module.lpBaseOfDll + match + offset) + extra
+    yes_relative = pm.read_int(module.lpBaseOfDll + match + offset) + extra - module.lpBaseOfDll
+    return "0x{:X}".format(yes_relative) if relative else "0x{:X}".format(non_relative)
+
+
+patterns = {}
+
+
+def transform_patterns():  # unfinished
+
+    response = requests.get("https://raw.githubusercontent.com/frk1/hazedumper/master/config.json").json()
+    for struct in response["signatures"]:
+        old = str(struct["pattern"])
+        new = old.replace("?", ".")
+        new = new.split(" ")
+        newone = ""
+        for element in new:
+            if element != ".":
+                element = r'\x' + element
+            newone = newone + element
+        patterns[struct["name"]] = newone
+
+
+pm = pymem.Pymem(ProcessName)
 
 m_ArmorValue = 0x117CC
 m_Collision = 0x320
@@ -58,16 +95,32 @@ m_vecVelocity = 0x114
 m_vecViewOffset = 0x108
 m_viewPunchAngle = 0x3030
 
-m_bDormant = 0xED
 m_clrRender = 0x70
 
-dwClientState_ViewAngles = 0x4D90
+# dwClientState_ViewAngles = 0x4D90
 dwClientState_State = 0x108
 dwClientState_MaxPlayer = 0x388
 
-dwGlowObjectManager = 0x0
-dwEntityList = 0x0
-dwClientState = 0x0
-dwForceJump = 0x0
-dwLocalPlayer = 0x0
-dwRadarBase = 0x0
+dwGlowObjectManager = get_signature(pm, Client, bytes(patterns["dwGlowObjectManager"], encoding="raw_unicode_escape"), 4, 1)
+print(dwGlowObjectManager)
+
+dwEntityList = get_signature(pm, Client, bytes(patterns["dwEntityList"], encoding="raw_unicode_escape"), 0, 1)
+print(dwEntityList)
+
+dwClientState = get_signature(pm, Engine, bytes(patterns["dwClientState"], encoding="raw_unicode_escape"), 0, 1)
+print(dwClientState)
+
+dwForceJump = get_signature(pm, Client, bytes(patterns["dwForceJump"], encoding="raw_unicode_escape"), 0, 2)
+print(dwForceJump)
+
+dwLocalPlayer = get_signature(pm, Client, bytes(patterns["dwLocalPlayer"], encoding="raw_unicode_escape"), 4, 3)
+print(dwLocalPlayer)
+
+dwClientState_ViewAngles = int(get_signature(pm, "engine.dll", bytes(patterns["dwClientState_ViewAngles"], encoding="raw_unicode_escape"), 0, 4, False), 0)
+print(dwClientState_ViewAngles)
+
+dwRadarBase = get_signature(pm, Client, bytes(patterns["dwRadarBase"], encoding="raw_unicode_escape"), 0, 1)
+print(dwRadarBase)
+
+m_bDormant = get_signature(pm, Client, bytes(patterns["m_bDormant"], encoding="raw_unicode_escape"), 8, 2, False)
+print(m_bDormant)
