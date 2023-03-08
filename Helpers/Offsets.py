@@ -106,38 +106,38 @@ dwClientState_MaxPlayer = int("0x388", 0)
 
 dwGlowObjectManager = get_signature(game, ClientDll, bytes(patterns["dwGlowObjectManager"], encoding="raw_unicode_escape"), 4, 1)
 dwGlowObjectManager = int(dwGlowObjectManager, 0)
-print(f"dwGlowObjectManager -> {dwGlowObjectManager}")
+# print(f"dwGlowObjectManager -> {dwGlowObjectManager}")
 
 dwEntityList = get_signature(game, ClientDll, bytes(patterns["dwEntityList"], encoding="raw_unicode_escape"), 0, 1)
 dwEntityList = int( dwEntityList, 0)
-print(f"dwEntityList -> {dwEntityList}")
+# print(f"dwEntityList -> {dwEntityList}")
 
 dwClientState = get_signature(game, EngineDll, bytes(patterns["dwClientState"], encoding="raw_unicode_escape"), 0, 1)
 dwClientState = int(dwClientState, 0)
-print(f"dwClientState -> {dwClientState}")
+# print(f"dwClientState -> {dwClientState}")
 
 dwForceJump = get_signature(game, ClientDll, bytes(patterns["dwForceJump"], encoding="raw_unicode_escape"), 0, 2)
 dwForceJump = int(dwForceJump, 0)
-print(f"dwForceJump -> {dwForceJump}")
+# print(f"dwForceJump -> {dwForceJump}")
 
 dwLocalPlayer = get_signature(game, ClientDll, bytes(patterns["dwLocalPlayer"], encoding="raw_unicode_escape"), 4, 3)
 dwLocalPlayer = int(dwLocalPlayer, 0)
-print(f"dwLocalPlayer -> {dwLocalPlayer}")
+# print(f"dwLocalPlayer -> {dwLocalPlayer}")
 
 dwClientState_ViewAngles = get_signature(game, "engine.dll", bytes(patterns["dwClientState_ViewAngles"], encoding="raw_unicode_escape"), 0, 4, False)
 dwClientState_ViewAngles = int(dwClientState_ViewAngles, 0)
-print(f"dwClientState_ViewAngles -> {dwClientState_ViewAngles}")
+# print(f"dwClientState_ViewAngles -> {dwClientState_ViewAngles}")
 
 dwRadarBase = get_signature(game, ClientDll, bytes(patterns["dwRadarBase"], encoding="raw_unicode_escape"), 0, 1)
 dwRadarBase = int(dwRadarBase, 0)
-print(f"dwRadarBase -> {dwRadarBase}")
+# print(f"dwRadarBase -> {dwRadarBase}")
 
 dwViewMatrix = get_signature(game, ClientDll, bytes(patterns["dwViewMatrix"], encoding="raw_unicode_escape"), 176, 3)
 dwViewMatrix = int(dwViewMatrix, 0)
-print(f"dwViewMatrix -> {dwViewMatrix}")
+# print(f"dwViewMatrix -> {dwViewMatrix}")
 
 m_bDormant = get_signature(game, ClientDll, bytes(patterns["m_bDormant"], encoding="raw_unicode_escape"), 8, 2, False)
 m_bDormant = int(m_bDormant, 0)
-print(f"m_bDormant -> {m_bDormant}")
+# print(f"m_bDormant -> {m_bDormant}")
 
 game.close_process()    # Close game handler once all the offsets have been found

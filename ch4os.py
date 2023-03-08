@@ -1,5 +1,8 @@
 from Helpers.Checkers import *
+from Misc.Antiflash import anti_flash
 from Misc.Glow import SetEntityGlow
+from Misc.BunnyHop import bunnyhop
+from Misc.Radar import radar
 import time
 import threading
 
@@ -23,19 +26,24 @@ def main():
 
         if client and engine and pm:
             try:
-                player, engine_pointer, glow_manager, crosshairid, getcrosshairTarget, immunitygunganme, \
-                    localTeam, crosshairTeam, y_angle = GetPlayerVars(pm, client, engine, engine_pointer)
+                player, engine_pointer, glow_manager, crosshair_id, crosshair_target, immunity_gun_game, \
+                    local_team, crosshair_team, y_angle, local_player_move_type, local_player_flags = get_player_vars(pm, client, engine, engine_pointer)
 
-            except Exception as e:
+            except Exception:
                 time.sleep(2)
                 continue
 
         for i in range(0, 64):  # Loop through all entities.
             entity = pm.read_uint(client + dwEntityList + i * 0x10)
             if entity:
-                entity_glow, entity_team_id, entity_is_defusing, entity_is_flashed, entity_hp, entity_dormant = GetEntityVars(pm, entity)
-                SetEntityGlow(pm, entity_hp, entity_team_id, entity_is_defusing, entity_is_flashed, entity_dormant, localTeam, glow_manager,
+                entity_glow, entity_team_id, entity_is_defusing, entity_is_flashed, entity_hp, entity_dormant = get_entity_vars(pm, entity)
+                SetEntityGlow(pm, entity_hp, entity_team_id, entity_is_defusing, entity_is_flashed, entity_dormant, local_team, glow_manager,
                               entity_glow)
+                radar(pm, entity)
+
+        bunnyhop(pm, client, player, local_player_move_type, local_player_flags)
+
+        anti_flash(pm, player)
 
 
 if __name__ == "__main__":

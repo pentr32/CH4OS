@@ -14,7 +14,7 @@ def SetEntityGlow(pm, entity_hp, enemy_team_id, entity_is_defusing, entity_is_fl
 
     # Change color base on entity is flashed
     if entity_is_flashed:
-        r, g, b = 0, 150, 204
+        r, g, b = 255, 255, 255
 
     # Change color base on entity is defusing
     if entity_is_defusing:

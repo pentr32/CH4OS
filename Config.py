@@ -1,7 +1,7 @@
 from WinAPI.Keyboard import *
 
 
-class Controls:
+class OtherControls:
     ToggleAimbot = VK_NUMPAD1
     ToggleAntiflash = VK_NUMPAD5
     ToggleBunnyhop = VK_NUMPAD3
@@ -37,6 +37,8 @@ class Settings:
 
     class Glow:
         Enabled = True
+        PlayerColorMode = 0
+        FullBloom = False
 
         C4 = True
         C4_Color_R = 231
@@ -56,15 +58,21 @@ class Settings:
         Enemies_Color_B = 43
         Enemies_Color_A = 180
 
-    # class Aimbot:
-    #     Enabled = True
-    #     Fov = 4.0
-    #     Bone = 8
-    #     Smooth = 2.0
-    #     VisibleCheck = False
-    #     RecoilControl = True
-    #     YawRecoilReductionFactory = 2.0
-    #     PitchRecoilReductionFactory = 2.0
-    #     Curve = False
-    #     CurveY = 0.5
-    #     CurveX = 10.0
+        Allies = False
+        Allies_Color_R = 39
+        Allies_Color_G = 174
+        Allies_Color_B = 96
+        Allies_Color_A = 200
+
+    class Aimbot:
+        Enabled = True
+        Fov = 4.0
+        Bone = 8
+        Smooth = 2.0
+        VisibleCheck = False
+        RecoilControl = True
+        YawRecoilReductionFactory = 2.0
+        PitchRecoilReductionFactory = 2.0
+        Curve = False
+        CurveY = 0.5
+        CurveX = 10.0
