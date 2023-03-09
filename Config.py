@@ -1,78 +1,96 @@
-from WinAPI.Keyboard import *
+from keyboard import add_hotkey
+
+#region Glow settings
+GlowEnabled = True
+
+# RGB colors for the glow misc, when enemies are defusing the bomb.
+Enemy_Defusing_Color_R = 0
+Enemy_Defusing_Color_G = 150
+Enemy_Defusing_Color_B = 204
+
+# RGB colors for the glow misc, when enemies are flashed.
+Enemy_Flashed_Color_R = 255
+Enemy_Flashed_Color_G = 255
+Enemy_Flashed_Color_B = 255
+#endregion Glow settings
+
+#region Aimbot settings
+AimbotEnabled = False
+#endregion Aimbot settings
+
+#region Triggerbot settings
+TriggerbotEnabled = False
+#endregion Triggerbot settings
+
+#region Bunnyhop settings
+BunnyhopEnabled = False
+#endregion Bunnyhop settings
+
+#region Radar settings
+RadarEnabled = False
+#endregion Radar settings
+
+#region Antiflash settings
+AntiflashEnabled = False
+#endregion Antiflash settings
+
+#region RecoilControl settings
+RecoilControlEnabled = False
+#endregion RecoilControl settings
 
 
-class OtherControls:
-    ToggleAimbot = VK_NUMPAD1
-    ToggleAntiflash = VK_NUMPAD5
-    ToggleBunnyhop = VK_NUMPAD3
-    ToggleGlow = VK_NUMPAD0
-    ToggleRadar = VK_NUMPAD4
-    ToggleTriggerbot = VK_NUMPAD2
-    ToggleRecoilControl = VK_NUMPAD6
-
-    # ToggleAutostrafe = ???
-    # ToggleChams = ???
-    # ToggleRankReveal = ???
-    # ToggleSoundESP = ???
-    # ToggleBoxESP = ???
-    # ToggleSnapLines = ???
-    # ToggleSkeleton
-    # ToggleFakeLag = ???
+#region Toggle misc functions
 
 
-class Settings:
-    class Radar:
-        Enabled = False
+def toggle_glow():
+    global GlowEnabled
+    GlowEnabled = not GlowEnabled
 
-    class Bunnyhop:
-        Enabled = False
-        Key = 0x20  # VK_SPACE
 
-    class Trigger:
-        Enabled = True
-        Delay = 0
+def toggle_aimbot():
+    global AimbotEnabled
+    AimbotEnabled = not AimbotEnabled
 
-    class Antiflash:
-        Enabled = False
 
-    class Glow:
-        Enabled = True
-        PlayerColorMode = 0
-        FullBloom = False
+def toggle_triggerbot():
+    global TriggerbotEnabled
+    TriggerbotEnabled = not TriggerbotEnabled
 
-        C4 = True
-        C4_Color_R = 231
-        C4_Color_G = 76
-        C4_Color_B = 60
-        C4_Color_A = 255
 
-        Grenades = True
-        Grenades_Color_R = 241
-        Grenades_Color_G = 196
-        Grenades_Color_B = 15
-        Grenades_Color_A = 255
+def toggle_bunnyhop():
+    global BunnyhopEnabled
+    BunnyhopEnabled = not BunnyhopEnabled
 
-        Enemies = True
-        Enemies_Color_R = 192
-        Enemies_Color_G = 57
-        Enemies_Color_B = 43
-        Enemies_Color_A = 180
 
-        Allies = False
-        Allies_Color_R = 39
-        Allies_Color_G = 174
-        Allies_Color_B = 96
-        Allies_Color_A = 200
+def toggle_radar():
+    global RadarEnabled
+    RadarEnabled = not RadarEnabled
 
-    class Aimbot:
-        Enabled = True
-        Fov = 4.0
-        Bone = 8
-        Smooth = 2.0
-        VisibleCheck = False
-        RecoilControl = True
-        YawRecoilReductionFactory = 2.0
-        PitchRecoilReductionFactory = 2.0
-        Curve = False
-        CurveY = 0.5
-        CurveX = 10.0
+
+def toggle_antiflash():
+    global AntiflashEnabled
+    AntiflashEnabled = not AntiflashEnabled
+
+
+def toggle_recoilcontrol():
+    global RecoilControlEnabled
+    RecoilControlEnabled = not RecoilControlEnabled
+#endregion Toggle misc functions
+
+
+add_hotkey("0", lambda: toggle_glow())
+# add_hotkey("numpad1", lambda: toggle_aimbot())
+# add_hotkey("numpad2", lambda: toggle_triggerbot())
+# add_hotkey("numpad3", lambda: toggle_bunnyhop())
+# add_hotkey("numpad4", lambda: toggle_radar())
+# add_hotkey("numpad5", lambda: toggle_antiflash())
+# add_hotkey("numpad6", lambda: toggle_recoilcontrol())
+
+# ToggleAutostrafe = ???
+# ToggleChams = ???
+# ToggleRankReveal = ???
+# ToggleSoundESP = ???
+# ToggleBoxESP = ???
+# ToggleSnapLines = ???
+# ToggleSkeleton
+# ToggleFakeLag = ???
