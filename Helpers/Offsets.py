@@ -1,6 +1,5 @@
 import pymem
 import re
-import requests
 from Helpers.Globals import *
 
 
@@ -17,27 +16,6 @@ def get_signature(pm, modulename, pattern, extra=0, offset=0, relative=True):
     non_relative = pm.read_int(module.lpBaseOfDll + match + offset) + extra
     yes_relative = pm.read_int(module.lpBaseOfDll + match + offset) + extra - module.lpBaseOfDll
     return "0x{:X}".format(yes_relative) if relative else "0x{:X}".format(non_relative)
-
-
-patterns = {}
-
-
-def aob():
-
-    response = requests.get("https://raw.githubusercontent.com/frk1/hazedumper/master/config.json").json()
-    for struct in response["signatures"]:
-        old = str(struct["pattern"])
-        new = old.replace("?", ".")
-        new = new.split(" ")
-        newone = ""
-        for element in new:
-            if element != ".":
-                element = r'\x' + element
-            newone = newone + element
-        patterns[struct["name"]] = newone
-
-
-aob()
 
 
 game = pymem.Pymem(ProcessName)
@@ -104,39 +82,39 @@ dwClientState_State = int("0x108", 0)
 dwClientState_MaxPlayer = int("0x388", 0)
 
 
-dwGlowObjectManager = get_signature(game, ClientDll, bytes(patterns["dwGlowObjectManager"], encoding="raw_unicode_escape"), 4, 1)
+dwGlowObjectManager = get_signature(game, ClientDll, bytes("\xA1....\xA8\x01\x75\x4B", encoding="raw_unicode_escape"), 4, 1)
 dwGlowObjectManager = int(dwGlowObjectManager, 0)
 # print(f"dwGlowObjectManager -> {dwGlowObjectManager}")
 
-dwEntityList = get_signature(game, ClientDll, bytes(patterns["dwEntityList"], encoding="raw_unicode_escape"), 0, 1)
+dwEntityList = get_signature(game, ClientDll, bytes("\xBB....\x83\xFF\x01\x0F\x8C....\x3B\xF8", encoding="raw_unicode_escape"), 0, 1)
 dwEntityList = int( dwEntityList, 0)
 # print(f"dwEntityList -> {dwEntityList}")
 
-dwClientState = get_signature(game, EngineDll, bytes(patterns["dwClientState"], encoding="raw_unicode_escape"), 0, 1)
+dwClientState = get_signature(game, EngineDll, bytes("\xA1....\x33\xD2\x6A\x00\x6A\x00\x33\xC9\x89\xB0", encoding="raw_unicode_escape"), 0, 1)
 dwClientState = int(dwClientState, 0)
 # print(f"dwClientState -> {dwClientState}")
 
-dwForceJump = get_signature(game, ClientDll, bytes(patterns["dwForceJump"], encoding="raw_unicode_escape"), 0, 2)
+dwForceJump = get_signature(game, ClientDll, bytes("\x8B\x0D....\x8B\xD6\x8B\xC1\x83\xCA\x02", encoding="raw_unicode_escape"), 0, 2)
 dwForceJump = int(dwForceJump, 0)
 # print(f"dwForceJump -> {dwForceJump}")
 
-dwLocalPlayer = get_signature(game, ClientDll, bytes(patterns["dwLocalPlayer"], encoding="raw_unicode_escape"), 4, 3)
+dwLocalPlayer = get_signature(game, ClientDll, bytes("\x8D\x34\x85....\x89\x15....\x8B\x41\x08\x8B\x48\x04\x83\xF9\xFF", encoding="raw_unicode_escape"), 4, 3)
 dwLocalPlayer = int(dwLocalPlayer, 0)
 # print(f"dwLocalPlayer -> {dwLocalPlayer}")
 
-dwClientState_ViewAngles = get_signature(game, "engine.dll", bytes(patterns["dwClientState_ViewAngles"], encoding="raw_unicode_escape"), 0, 4, False)
+dwClientState_ViewAngles = get_signature(game, EngineDll, bytes("\xF3\x0F\x11\x86....\xF3\x0F\x10\x44\x24.\xF3\x0F\x11\x86", encoding="raw_unicode_escape"), 0, 4, False)
 dwClientState_ViewAngles = int(dwClientState_ViewAngles, 0)
 # print(f"dwClientState_ViewAngles -> {dwClientState_ViewAngles}")
 
-dwRadarBase = get_signature(game, ClientDll, bytes(patterns["dwRadarBase"], encoding="raw_unicode_escape"), 0, 1)
+dwRadarBase = get_signature(game, ClientDll, bytes("\xA1....\x8B\x0C\xB0\x8B\x01\xFF\x50.\x46\x3B\x35....\x7C\xEA\x8B\x0D", encoding="raw_unicode_escape"), 0, 1)
 dwRadarBase = int(dwRadarBase, 0)
 # print(f"dwRadarBase -> {dwRadarBase}")
 
-dwViewMatrix = get_signature(game, ClientDll, bytes(patterns["dwViewMatrix"], encoding="raw_unicode_escape"), 176, 3)
+dwViewMatrix = get_signature(game, ClientDll, bytes("\x0F\x10\x05....\x8D\x85....\xB9", encoding="raw_unicode_escape"), 176, 3)
 dwViewMatrix = int(dwViewMatrix, 0)
 # print(f"dwViewMatrix -> {dwViewMatrix}")
 
-m_bDormant = get_signature(game, ClientDll, bytes(patterns["m_bDormant"], encoding="raw_unicode_escape"), 8, 2, False)
+m_bDormant = get_signature(game, ClientDll, bytes("\x8A\x81....\xC3\x32\xC0", encoding="raw_unicode_escape"), 8, 2, False)
 m_bDormant = int(m_bDormant, 0)
 # print(f"m_bDormant -> {m_bDormant}")
 
