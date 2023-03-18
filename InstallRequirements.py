@@ -2,9 +2,6 @@ import subprocess
 import os
 
 
-clearoutput = lambda: os.system('cls')
-
-
 def install_package(package: str):
     subprocess.check_call(['pip', 'install', package])
 
@@ -22,33 +19,35 @@ def is_installed(package: str):
 
 
 def get_packages_list():
-    packageslist = []
-    with open('Packages.txt', 'rt') as file:
+    packages_list = []
+    with open('requirements.txt', 'rt') as file:
         packages = file.read().splitlines()
         for package in packages:
             if package and not is_installed(package):
-                packageslist.append(package)
-    return packageslist
+                packages_list.append(package)
+    return packages_list
 
 
 def run():
-    packageslist = get_packages_list()
+    packages_list = get_packages_list()
 
-    if not packageslist:
+    if not packages_list:
         return print('\n[!] All packages are already installed!')
 
-    print(f'\n[!] {len(packageslist)} packages are missing! Without those, you cannot run the scripts from this project. \n')
+    print(f'\n[!] {len(packages_list)} packages are missing! Without those, you cannot run the scripts from this project. \n')
+    test = [p for p in packages_list]
+    print(test)
     print('Would you like to install it? Y/N')
 
     if input().lower() == 'y':
-        for package in packageslist:
+        for package in packages_list:
             print(f'\n[+] Installing {package}...')
             install_package(package)
-        print(f'\n[!] {len(packageslist)} has been installed!')
+        print(f'\n[!] {len(packages_list)} has been installed!')
 
 
 try:
-    clearoutput()
+    os.system('cls')
     run()
 
 except KeyboardInterrupt:

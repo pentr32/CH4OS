@@ -21,16 +21,18 @@ client = pymem.process.module_from_name(pm.process_handle, "client.dll").lpBaseO
 engine = pymem.process.module_from_name(pm.process_handle, "engine.dll").lpBaseOfDll
 engine_state = pm.read_uint(engine + dwClientState)
 
-def main():
-    keyboard.add_hotkey('F6', lambda: change_skin())
-    keyboard.add_hotkey('F7', lambda: force_full_update())
-    keyboard.wait()
+keyboard.add_hotkey('F6', lambda: change_skin())
+keyboard.add_hotkey('F7', lambda: force_full_update())
+keyboard.wait()
+
 
 def force_full_update():
     pm.write_int(engine_state + 0x174, -1)
 
+
 def change_skin():
-    paint = 344 # https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt
+    # https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt
+    skin = 344
     local_player = pm.read_uint(client + dwLocalPlayer)
 
     for i in range(0, 8):
@@ -40,15 +42,7 @@ def change_skin():
         if weapon_address:
             weapon_id = pm.read_short(weapon_address + m_iItemDefinitionIndex)
             pm.write_int(weapon_address + m_iEntityQuality, 3)
-            # weapon_owner = pm.read_uint(weapon_address + m_OriginalOwnerXuidLow)
             pm.write_int(weapon_address + m_iItemIDHigh, -1)
-            # pm.write_int(weapon_address + m_OriginalOwnerXuidLow, weapon_owner)
-            # pm.write_int(weapon_address + m_nFallbackStatTrak, -1)
-            # pm.write_int(weapon_address + m_iItemDefinitionIndex, weapon_id)
-            pm.write_int(weapon_address + m_nFallbackPaintKit, paint)
-            # pm.write_int(weapon_address + m_nFallbackSeed, 661)
+            pm.write_int(weapon_address + m_nFallbackPaintKit, skin)
             pm.write_float(weapon_address + m_flFallbackWear, float(0.001))
             force_full_update()
-
-if __name__ == '__main__':
-    main()
