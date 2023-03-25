@@ -1,4 +1,4 @@
-from keyboard import add_hotkey
+from pynput.keyboard import HotKey, Key
 
 #region Glow settings
 GlowEnabled = True
@@ -78,7 +78,7 @@ def toggle_recoilcontrol():
 #endregion Toggle misc functions
 
 
-add_hotkey("0", lambda: toggle_glow())
+Hotkey(HotKey.parse("numpad0"), toggle_glow())
 # add_hotkey("numpad1", lambda: toggle_aimbot())
 # add_hotkey("numpad2", lambda: toggle_triggerbot())
 # add_hotkey("numpad3", lambda: toggle_bunnyhop())
